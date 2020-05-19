@@ -1,0 +1,14 @@
+.idea
+**/*/target
+**/*/logs
+*.iml
+**/*/pid
+**/*/idl/gen-java
+*.log
+*.DS_Store
+logs/*
+pid
+logs/*
+system.conf
+pid
+jar/*
