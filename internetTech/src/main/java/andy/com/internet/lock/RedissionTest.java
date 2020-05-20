@@ -29,7 +29,9 @@ public class RedissionTest {
         .setRetryAttempts(1)
         .setRetryInterval(0);
 
+
         config.setLockWatchdogTimeout(10 * 1000);
+        //config.setKeepPubSubOrder(true);
 
         RedissonClient client = Redisson.create(config);
         return client;
@@ -80,10 +82,11 @@ public class RedissionTest {
         ;
 
         System.out.println("end1");
-        t1.join();
+        //t1.join();
         System.out.println("end2");
-        t2.join();
+        //t2.join();
         System.out.println("end");
+        TimeUnit.SECONDS.sleep(20);
 
     }
 
@@ -111,11 +114,11 @@ public class RedissionTest {
 
         final String lockName = "lock";
 
-        Thread t1 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 12);
+        Thread t1 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 12, 5);
         t1.setName("t1");
         t1.start();
 
-        Thread t2 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 2);
+        Thread t2 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 2, 5);
         t2.setName("t2");
         TimeUnit.SECONDS.sleep(1);
         t2.start();
@@ -159,6 +162,7 @@ public class RedissionTest {
                         } finally {
                             System.out.println(new Date() + "  " + Thread.currentThread().getName() + " unlock");
                             lock1.unlock();
+                            System.out.println(new Date() + "  " + Thread.currentThread().getName() + " unlocked");
                             break;
                         }
                     } else {
@@ -176,6 +180,26 @@ public class RedissionTest {
     }
 
 
+    @Test
+    public void testLock1() throws Exception {
+
+
+        final String lockName = "lock";
+
+        Thread t1 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 4, 5);
+        t1.setName("t1");
+        t1.start();
+
+        Thread t2 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 4, 5);
+        t2.setName("t2");
+        TimeUnit.SECONDS.sleep(1);
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+    }
+
     /**
      * 使用带leaseTime的lock方法，不会启动看门狗自动续期功能，到期后key就会失效，慎用
      */
@@ -184,11 +208,13 @@ public class RedissionTest {
         private String lockName = "lockDefatult";
         private RedissonClient client = null;
         private long sleepS = 30;
+        private int leaseTimeS = 30;
 
-        public RedissionWithLeaseTimeThread(RedissonClient client, String lockName, long sleepS) {
+        public RedissionWithLeaseTimeThread(RedissonClient client, String lockName, long sleepS, int leaseTimeS) {
             this.client = client;
             this.lockName = lockName;
             this.sleepS = sleepS;
+            this.leaseTimeS = leaseTimeS;
         }
 
         @Override
@@ -200,7 +226,7 @@ public class RedissionTest {
 
                     //使用带leaseTime的lock方法，不会启动看门狗自动续期功能，到期后key就会失效释放锁，这里最多锁住10ms
                     System.out.println(new Date() + "  " + Thread.currentThread().getName() + " trylock");
-                    boolean res = lock1.tryLock(2, 5, TimeUnit.SECONDS);
+                    boolean res = lock1.tryLock(2, this.leaseTimeS, TimeUnit.SECONDS);
                     if (res) {
                         try {
                             System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep " + sleepS + " second");
