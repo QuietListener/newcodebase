@@ -13,22 +13,31 @@ import java.util.concurrent.TimeUnit;
 
 public class RedissionTest {
 
-    @Test
-    public void test1() throws Exception {
 
+    public RedissonClient getRedissionClient() {
         Config config = new Config();
         SingleServerConfig singleServerConfig = config.useSingleServer();
         singleServerConfig.setAddress("redis://127.0.0.1:6379");
         singleServerConfig.setConnectionMinimumIdleSize(2);
         singleServerConfig.setConnectionPoolSize(10);
         singleServerConfig.setKeepAlive(true);
-        singleServerConfig.setTimeout(100);
+        singleServerConfig.setTimeout(300);
         singleServerConfig.setPassword("123456");
         singleServerConfig.setDatabase(0);
-        config.setLockWatchdogTimeout(5);
+        singleServerConfig.setRetryAttempts(2);
+        singleServerConfig.setRetryInterval(500);
+        config.setLockWatchdogTimeout(10 * 1000);
 
-        final RedissonClient client = Redisson.create(config);
+        RedissonClient client = Redisson.create(config);
+        return client;
 
+    }
+
+
+    @Test
+    public void test1() throws Exception {
+
+        RedissonClient client = getRedissionClient();
         String Key1 = "key1";
         RBucket<String> b1 = client.getBucket(Key1);
         b1.setAsync("121212", 10, TimeUnit.SECONDS);
@@ -48,84 +57,164 @@ public class RedissionTest {
 
     }
 
+    /**
+     * 使用不带leaseTime的lock方法，启动看门狗自动续期功能
+     *
+     * @throws Exception
+     */
     @Test
-    public void testLock() throws Exception {
-        Config config = new Config();
-        SingleServerConfig singleServerConfig = config.useSingleServer();
-        singleServerConfig.setAddress("redis://127.0.0.1:6379");
-        singleServerConfig.setConnectionMinimumIdleSize(2);
-        singleServerConfig.setConnectionPoolSize(10);
-        singleServerConfig.setKeepAlive(true);
-        singleServerConfig.setTimeout(100);
-        singleServerConfig.setPassword("123456");
-        singleServerConfig.setDatabase(0);
-        config.setLockWatchdogTimeout(5);
-
-        final RedissonClient client = Redisson.create(config);
-
+    public void testLockWithoutLeaseTime() throws Exception {
         final String lockName = "lock";
 
-
-        Thread t1 = new Thread() {
-
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        RLock lock1 = client.getLock(lockName);
-                        boolean res = lock1.tryLock();
-                        if (res) {
-                            try {
-                                System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep 15 second");
-                                TimeUnit.SECONDS.sleep(15);
-                            } finally {
-                                System.out.println(new Date() + "  " + Thread.currentThread().getName() + " unlock");
-                                lock1.unlock();
-                                break;
-                            }
-                        }
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        };
-
+        Thread t1 = new RedissionWithoutLeaseTimeThread(getRedissionClient(), lockName, 12);
         t1.setName("t1");
         t1.start();
 
-        Thread t2 = new Thread() {
-
-            @Override
-            public void run() {
-
-                try {
-                    while (true) {
-                        RLock lock1 = client.getLock(lockName);
-                        boolean res = lock1.tryLock();
-                        if (res) {
-                            try {
-                                System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep 3 second");
-                                TimeUnit.SECONDS.sleep(3);
-                            } finally {
-                                System.out.println(new Date() + "  " + Thread.currentThread().getName() + " unlock");
-                                lock1.unlock();
-                                break;
-                            }
-                        }
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-        };
-        TimeUnit.SECONDS.sleep(2);
+        Thread t2 = new RedissionWithoutLeaseTimeThread(getRedissionClient(), lockName, 2);
         t2.setName("t2");
+        TimeUnit.SECONDS.sleep(2);
+        t2.start();
+        ;
+
+        System.out.println("end1");
+        t1.join();
+        System.out.println("end2");
+        t2.join();
+        System.out.println("end");
+
+    }
+
+
+    /**
+     * 使用带leaseTime的lock方法，不会启动看门狗自动续期功能，到期后key就会失效 释放锁，慎用
+     * <p>
+     * 例如下面的例子
+     * 运行结果如下
+     * <p>
+     * Wed May 20 17:13:32 CST 2020  t1 get lock sleep 12 second  #t1获取锁后 会执行12秒
+     * Wed May 20 17:13:36 CST 2020  t2 do not get  lock sleep #5秒后锁过期，释放
+     * Wed May 20 17:13:37 CST 2020  t2 get lock sleep 2 second #t2获取锁
+     * Wed May 20 17:13:39 CST 2020  t2 unlock #t2释放锁
+     * Wed May 20 17:13:44 CST 2020  t1 unlock #t1释放锁出现错误
+     * <p>
+     * java.lang.IllegalMonitorStateException: attempt to unlock lock, not locked by current thread by node id: 3f95a47c-32f8-4cd9-921b-19f1be1787d4 thread-id: 23
+     * at org.redisson.RedissonLock.lambda$unlockAsync$3(RedissonLock.java:601)
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testLockWithLeaseTime() throws Exception {
+
+
+        final String lockName = "lock";
+
+        Thread t1 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 12);
+        t1.setName("t1");
+        t1.start();
+
+        Thread t2 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 2);
+        t2.setName("t2");
+        TimeUnit.SECONDS.sleep(1);
         t2.start();
 
-        TimeUnit.SECONDS.sleep(19);
-        client.shutdown();
+        t1.join();
+        t2.join();
+
+    }
+
+    /**
+     * 使用不带 leaseTime的lock方法，会启动看门狗自动续期功能
+     */
+    public static class RedissionWithoutLeaseTimeThread extends Thread {
+
+        private String lockName = "lockDefatult";
+        private RedissonClient client = null;
+        private long sleepS = 30;
+
+        public RedissionWithoutLeaseTimeThread(RedissonClient client, String lockName, long sleepS) {
+            this.client = client;
+            this.lockName = lockName;
+            this.sleepS = sleepS;
+        }
+
+        @Override
+        public void run() {
+
+            try {
+                while (true) {
+                    RLock lock1 = client.getLock(lockName);
+
+                    //使用不带 leaseTime的lock方法，会启动看门狗自动续期功能
+                    boolean res = lock1.tryLock(1, TimeUnit.SECONDS);
+
+                    if (res) {
+                        try {
+                            System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep " + sleepS + " second");
+                            TimeUnit.SECONDS.sleep(sleepS);
+                        } finally {
+                            System.out.println(new Date() + "  " + Thread.currentThread().getName() + " unlock");
+                            lock1.unlock();
+                            break;
+                        }
+                    } else {
+                        System.out.println(new Date() + "  " + Thread.currentThread().getName() + " do not get  lock sleep");
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                this.client.shutdown();
+            }
+        }
+
+    }
+
+
+    /**
+     * 使用带leaseTime的lock方法，不会启动看门狗自动续期功能，到期后key就会失效，慎用
+     */
+    public static class RedissionWithLeaseTimeThread extends Thread {
+
+        private String lockName = "lockDefatult";
+        private RedissonClient client = null;
+        private long sleepS = 30;
+
+        public RedissionWithLeaseTimeThread(RedissonClient client, String lockName, long sleepS) {
+            this.client = client;
+            this.lockName = lockName;
+            this.sleepS = sleepS;
+        }
+
+        @Override
+        public void run() {
+
+            try {
+                while (true) {
+                    RLock lock1 = client.getLock(lockName);
+
+                    //使用带leaseTime的lock方法，不会启动看门狗自动续期功能，到期后key就会失效释放锁，这里最多锁住10ms
+                    boolean res = lock1.tryLock(2, 5, TimeUnit.SECONDS);
+                    if (res) {
+                        try {
+                            System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep " + sleepS + " second");
+                            TimeUnit.SECONDS.sleep(sleepS);
+                        } finally {
+                            System.out.println(new Date() + "  " + Thread.currentThread().getName() + " unlock");
+                            lock1.unlock();
+                            break;
+                        }
+                    } else {
+                        System.out.println(new Date() + "  " + Thread.currentThread().getName() + " do not get  lock sleep");
+                    }
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                this.client.shutdown();
+            }
+        }
 
     }
 
