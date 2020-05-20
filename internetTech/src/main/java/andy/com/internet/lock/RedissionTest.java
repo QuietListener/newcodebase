@@ -17,15 +17,18 @@ public class RedissionTest {
     public RedissonClient getRedissionClient() {
         Config config = new Config();
         SingleServerConfig singleServerConfig = config.useSingleServer();
-        singleServerConfig.setAddress("redis://127.0.0.1:6379");
-        singleServerConfig.setConnectionMinimumIdleSize(2);
-        singleServerConfig.setConnectionPoolSize(10);
-        singleServerConfig.setKeepAlive(true);
-        singleServerConfig.setTimeout(300);
-        singleServerConfig.setPassword("123456");
-        singleServerConfig.setDatabase(0);
-        singleServerConfig.setRetryAttempts(2);
-        singleServerConfig.setRetryInterval(500);
+
+        singleServerConfig.setAddress("redis://127.0.0.1:6379")
+        .setConnectionMinimumIdleSize(2)
+        .setConnectionPoolSize(10)
+        //.setKeepAlive(true)
+        .setTimeout(300)
+        .setPassword("123456")
+        .setDatabase(0)
+        .setPingConnectionInterval(2000)
+        .setRetryAttempts(1)
+        .setRetryInterval(0);
+
         config.setLockWatchdogTimeout(10 * 1000);
 
         RedissonClient client = Redisson.create(config);
@@ -145,8 +148,10 @@ public class RedissionTest {
                     RLock lock1 = client.getLock(lockName);
 
                     //使用不带 leaseTime的lock方法，会启动看门狗自动续期功能
-                    boolean res = lock1.tryLock(1, TimeUnit.SECONDS);
-
+                    System.out.println(new Date() + "  " + Thread.currentThread().getName() + " trylock");
+                    //boolean res = lock1.tryLock(1, TimeUnit.SECONDS);
+                    boolean res = true;
+                    lock1.lockInterruptibly();
                     if (res) {
                         try {
                             System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep " + sleepS + " second");
@@ -194,6 +199,7 @@ public class RedissionTest {
                     RLock lock1 = client.getLock(lockName);
 
                     //使用带leaseTime的lock方法，不会启动看门狗自动续期功能，到期后key就会失效释放锁，这里最多锁住10ms
+                    System.out.println(new Date() + "  " + Thread.currentThread().getName() + " trylock");
                     boolean res = lock1.tryLock(2, 5, TimeUnit.SECONDS);
                     if (res) {
                         try {
