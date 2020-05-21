@@ -5,9 +5,11 @@ import org.redisson.Redisson;
 import org.redisson.api.RBucket;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.redisson.codec.JsonJacksonCodec;
 import org.redisson.config.Config;
 import org.redisson.config.SingleServerConfig;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -19,28 +21,34 @@ public class RedissionTest {
         SingleServerConfig singleServerConfig = config.useSingleServer();
 
         singleServerConfig.setAddress("redis://127.0.0.1:6379")
-        .setConnectionMinimumIdleSize(2)
-        .setConnectionPoolSize(10)
-        //.setKeepAlive(true)
-        .setTimeout(300)
-        .setPassword("123456")
-        .setDatabase(0)
-        .setPingConnectionInterval(2000)
-        .setRetryAttempts(1)
-        .setRetryInterval(0);
+                .setConnectionMinimumIdleSize(2)
+                .setConnectionPoolSize(10)
+                //.setKeepAlive(true)
+                .setTimeout(300)
+                .setPassword("123456")
+                .setDatabase(0)
+                .setPingConnectionInterval(2000)
+                .setRetryAttempts(1)
+                .setRetryInterval(0);
 
 
         config.setLockWatchdogTimeout(10 * 1000);
         //config.setKeepPubSubOrder(true);
 
+        config.setCodec(new JsonJacksonCodec());
         RedissonClient client = Redisson.create(config);
         return client;
 
     }
 
 
+    /**
+     * 基本操作重启
+     *
+     * @throws Exception
+     */
     @Test
-    public void test1() throws Exception {
+    public void testBasic() throws Exception {
 
         RedissonClient client = getRedissionClient();
         String Key1 = "key1";
@@ -58,6 +66,36 @@ public class RedissionTest {
         System.out.print("value2 = " + value2 + "\r\n");
 
         System.out.println();
+        client.shutdown();
+
+    }
+
+    /**
+     * 跑几秒后关掉redis，然后过几秒重启~
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testReconnect() throws Exception {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String Key1 = "key1";
+        String value = "112233";
+        RedissonClient client = getRedissionClient();
+        for (int i = 0; i < 100; i++) {
+            try {
+                RBucket<String> b1 = client.getBucket(Key1);
+                b1.set(value, 10, TimeUnit.SECONDS);
+                System.out.println(sdf.format(new Date()) + " set value " + value);
+
+                RBucket<String> b2 = client.getBucket(Key1);
+                String value1 = b2.get();
+                System.out.println(sdf.format(new Date()) + " get value " + value1);
+                TimeUnit.SECONDS.sleep(2);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         client.shutdown();
 
     }
