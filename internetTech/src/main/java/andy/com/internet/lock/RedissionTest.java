@@ -120,11 +120,11 @@ public class RedissionTest {
         ;
 
         System.out.println("end1");
-        //t1.join();
+        t1.join();
         System.out.println("end2");
-        //t2.join();
+        t2.join();
         System.out.println("end");
-        TimeUnit.SECONDS.sleep(20);
+        //TimeUnit.SECONDS.sleep(20);
 
     }
 
@@ -192,7 +192,7 @@ public class RedissionTest {
                     System.out.println(new Date() + "  " + Thread.currentThread().getName() + " trylock");
                     //boolean res = lock1.tryLock(1, TimeUnit.SECONDS);
                     boolean res = true;
-                    lock1.lockInterruptibly();
+                    lock1.lock();
                     if (res) {
                         try {
                             System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep " + sleepS + " second");
@@ -223,12 +223,12 @@ public class RedissionTest {
 
 
         final String lockName = "lock";
-
-        Thread t1 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 4, 5);
+        RedissonClient client = getRedissionClient();
+        Thread t1 = new RedissionWithLeaseTimeThread(client, lockName, 4, 5);
         t1.setName("t1");
         t1.start();
 
-        Thread t2 = new RedissionWithLeaseTimeThread(getRedissionClient(), lockName, 4, 5);
+        Thread t2 = new RedissionWithLeaseTimeThread(client, lockName, 4, 5);
         t2.setName("t2");
         TimeUnit.SECONDS.sleep(1);
         t2.start();
@@ -264,7 +264,8 @@ public class RedissionTest {
 
                     //使用带leaseTime的lock方法，不会启动看门狗自动续期功能，到期后key就会失效释放锁，这里最多锁住10ms
                     System.out.println(new Date() + "  " + Thread.currentThread().getName() + " trylock");
-                    boolean res = lock1.tryLock(2, this.leaseTimeS, TimeUnit.SECONDS);
+                    TimeUnit.SECONDS.sleep(6);
+                    boolean res = lock1.tryLock(1, this.leaseTimeS, TimeUnit.SECONDS);
                     if (res) {
                         try {
                             System.out.println(new Date() + "  " + Thread.currentThread().getName() + " get lock sleep " + sleepS + " second");
@@ -276,6 +277,7 @@ public class RedissionTest {
                         }
                     } else {
                         System.out.println(new Date() + "  " + Thread.currentThread().getName() + " do not get  lock sleep");
+                        TimeUnit.SECONDS.sleep(5);
                     }
 
                 }
