@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 //每个链接一个线程来处理
 public class ThreadPerConnEchoServer {
@@ -50,6 +51,10 @@ public class ThreadPerConnEchoServer {
                     int count = inputStream.read(buff);
                     System.out.println(name + " read "+ count);
                     if (count > 0) {
+
+                        //业务逻辑
+                        process(buff);
+
                         socket.getOutputStream().write(buff, 0, count);
                     }
 
@@ -67,6 +72,11 @@ public class ThreadPerConnEchoServer {
 
             System.out.println(name + " end");
         }
+    }
+
+    //业务逻辑
+    private void process(byte [] data) throws Exception{
+        TimeUnit.MILLISECONDS.sleep(100);
     }
 
     public static void main(String[] args) throws Exception {
