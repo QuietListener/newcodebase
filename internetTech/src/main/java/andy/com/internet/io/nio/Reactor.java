@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * http://gee.cs.oswego.edu/dl/cpjslides/nio.pdf
  * https://kasunpanorama.blogspot.com/2015/04/understanding-reactor-pattern-with-java.html
  */
 public class Reactor {

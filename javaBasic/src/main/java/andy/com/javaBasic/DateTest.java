@@ -23,4 +23,12 @@ public class DateTest {
             System.out.println("---------");
         }
     }
+
+
+    @Test
+    public void testDate(){
+        String dateStr = new SimpleDateFormat("yyyyMMdd").format(new Date());
+        int dateInt = Integer.parseInt(dateStr);
+        System.out.print(dateInt);
+    }
 }
