@@ -96,9 +96,10 @@ public class Reactor {
 
         @Override
         public void handle(SelectionKey key) {
+            SocketChannel sc = null;
             try {
                 ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
-                SocketChannel sc = (SocketChannel) ssc.accept();
+                sc = (SocketChannel) ssc.accept();
 
                 System.out.println("from："
                         + sc.socket().getInetAddress() + ":"
@@ -112,6 +113,13 @@ public class Reactor {
             }catch (IOException e){
                 e.printStackTrace();
                 key.cancel();
+                try {
+                    if(sc.isOpen()) {
+                        sc.close();
+                    }
+                }catch (Exception e3){
+                    e3.printStackTrace();
+                };
             }
 
         }
@@ -125,22 +133,28 @@ public class Reactor {
 
         @Override
         public void handle(SelectionKey key) {
+            SocketChannel sc = null;
             try {
-                SocketChannel sc = (SocketChannel) key.channel();
+                sc = (SocketChannel) key.channel();
                 ByteBuffer bf = (ByteBuffer)key.attachment();
                 int count = sc.read(bf);
                 System.out.println("read :"+count);
                 if(count < 0 ){
-                    key.cancel();
+                   throw new IOException("read -1");
                 }
 
                 if(count>0){
                     key.interestOps(SelectionKey.OP_WRITE);
                 }
 
-            }catch (Exception e){
+            }catch (IOException e){
                 e.printStackTrace();
                 key.cancel();
+                try {
+                    sc.close();
+                }catch (Exception e3){
+                    e3.printStackTrace();
+                };
             }
 
         }
@@ -154,8 +168,10 @@ public class Reactor {
 
         @Override
         public void handle(SelectionKey key) {
+
+            SocketChannel sc = null;
             try {
-                SocketChannel sc = (SocketChannel) key.channel();
+                sc = (SocketChannel) key.channel();
                 ByteBuffer bf = (ByteBuffer) key.attachment();
 
                 bf.flip();
@@ -170,6 +186,11 @@ public class Reactor {
             }catch (IOException e){
                 e.printStackTrace();
                 key.cancel();
+                try {
+                    sc.close();
+                }catch (Exception e3){
+                    e3.printStackTrace();
+                };
             }
 
         }

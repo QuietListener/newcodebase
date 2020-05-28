@@ -4,7 +4,9 @@ import org.junit.Test;
 
 import java.net.Socket;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ServerTest {
 
@@ -13,11 +15,13 @@ public class ServerTest {
         private String name;
         private String content;
         private int writeCount = 1;
+        private CountDownLatch latch;
 
-        public EchoTask(String name, String content, int writeCount) {
+        public EchoTask(String name, String content, int writeCount, CountDownLatch latch) {
             this.name = name;
             this.content = content;
             this.writeCount = writeCount;
+            this.latch = latch;
         }
 
         @Override
@@ -52,21 +56,32 @@ public class ServerTest {
                 } catch (Exception ee) {
                     ee.printStackTrace();
                 }
+            } finally {
+                try {
+                    socket.close();
+                }catch (Exception ee){
+                    ee.printStackTrace();
+                }
+                latch.countDown();
             }
-
         }
     }
 
 
     @Test
     public void test() throws Exception {
-        for (int i = 0; i < 100; i++) {
+        ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*2);
+        int count = 1000;
+        long start = System.currentTimeMillis();
+        CountDownLatch countDownLatch = new CountDownLatch(count);
+        for (int i = 0; i < count; i++) {
             String name = "Socket" + i;
-            Thread t = new EchoTask(name, name, i % 5 + 1);
-            t.start();
+            Thread t = new EchoTask(name, name, i % 5 + 1, countDownLatch);
+            pool.submit(t);
         }
 
-        TimeUnit.SECONDS.sleep(10);
-
+        countDownLatch.await();
+        long cost = System.currentTimeMillis() - start;
+        System.out.println("cost = " + cost + " count = " + count + " qps=" +   count/(cost*1.0/1000));
     }
 }
