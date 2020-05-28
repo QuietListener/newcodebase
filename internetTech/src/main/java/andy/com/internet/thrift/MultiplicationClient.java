@@ -19,7 +19,6 @@ public class MultiplicationClient {
 
 		try {
 			  TTransport transport = new TSocket(Host,Port);
-		      transport = new TFramedTransport(transport);
 		      transport.open();
 		      TProtocol protocol = new TBinaryProtocol(transport);	 //协议
 			  perform(protocol);
