@@ -7,7 +7,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
-//每个链接一个线程来处理
+/**
+ * 每个链接一个线程来处理,使用"阻塞IO"
+ */
 public class ThreadPerConnEchoServer {
 
     private int port;
