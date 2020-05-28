@@ -50,6 +50,7 @@ public class ServerTest {
                 try {
                     socket.close();
                 } catch (Exception ee) {
+                    ee.printStackTrace();
                 }
             }
 
@@ -59,7 +60,7 @@ public class ServerTest {
 
     @Test
     public void test() throws Exception {
-        for (int i = 0; i < 300; i++) {
+        for (int i = 0; i < 100; i++) {
             String name = "Socket" + i;
             Thread t = new EchoTask(name, name, i % 5 + 1);
             t.start();
