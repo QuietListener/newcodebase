@@ -15,14 +15,13 @@ public class MultiplicationClient {
 	final static int Port = 19090;
 
 	@Test
-	public  void test1(){
+	public  void testBioClient(){
 
 		try {
 			  TTransport transport = new TSocket(Host,Port);
 		      transport.open();
 		      TProtocol protocol = new TBinaryProtocol(transport);	 //协议
 			  perform(protocol);
-
 			  transport.close();
 		} catch (TException x) {
 			x.printStackTrace();
@@ -30,6 +29,27 @@ public class MultiplicationClient {
 		 catch (Exception x) {
 				x.printStackTrace();
 			}
+	}
+
+
+
+	@Test
+	public  void testNioClient(){
+
+		try {
+			TTransport transport = new TSocket(Host,Port);
+			TFramedTransport transport1 = new TFramedTransport(transport);
+			transport1.open();
+
+			TProtocol protocol = new TBinaryProtocol(transport1);	 //协议
+			perform(protocol);
+			transport.close();
+		} catch (TException x) {
+			x.printStackTrace();
+		}
+		catch (Exception x) {
+			x.printStackTrace();
+		}
 	}
 
 
