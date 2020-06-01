@@ -135,7 +135,7 @@ public class MultiplicationServer {
 	}
 
 	/**
-	 * 
+	 * TThreadedSelectorServer 将accept交给AcceptThread处理(1个)，然后将read/write等操作交给 SelectorThread,
 	 */
 	@Test
 	public void testTThreadedSelectorServer() {
