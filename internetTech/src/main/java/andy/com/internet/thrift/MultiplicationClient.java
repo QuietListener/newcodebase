@@ -14,6 +14,9 @@ public class MultiplicationClient {
 	final static String Host = "localhost";
 	final static int Port = 19090;
 
+	/**
+	 * 可以用于测试阻塞Server( TSimpleServer 和TThreadPoolServer)
+	 */
 	@Test
 	public  void testBioClient(){
 
@@ -32,7 +35,9 @@ public class MultiplicationClient {
 	}
 
 
-
+	/**
+	 * 可以用于测试非阻塞Server( TNoblockingServer ,THaHsServer,TThreadedSelectorServer)
+	 */
 	@Test
 	public  void testNioClient(){
 
