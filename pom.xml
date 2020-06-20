@@ -12,6 +12,7 @@
     <modules>
         <module>internetTech</module>
         <module>javaBasic</module>
+        <module>algorithm</module>
     </modules>
 
     <dependencyManagement>
