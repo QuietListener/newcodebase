@@ -29,6 +29,22 @@ public class DateTest {
     public void testDate(){
         String dateStr = new SimpleDateFormat("yyyyMMdd").format(new Date());
         int dateInt = Integer.parseInt(dateStr);
-        System.out.print(dateInt);
+        System.out.println(dateInt);
     }
+
+
+    @Test
+    public void testDate1() throws  Exception{
+        SimpleDateFormat sdf =  new SimpleDateFormat("yyyyMMddHH");
+
+        String dateStr = sdf.format(new Date());
+
+        Date d1 = sdf.parse("2020062210");
+        System.out.println(d1);
+        System.out.println(d1.getTime());
+
+        int dateInt = Integer.parseInt(dateStr);
+        System.out.println(dateInt);
+    }
+
 }
