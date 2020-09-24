@@ -2,19 +2,19 @@ package andy.com.algorighm.book1.algorithm;
 
 public abstract class Sort
 {
-	public static final int  INCREMENT = 0; //ï¿½ï¿½ï¿½ï¿½
-	public static final int  DECREMENT = 0; //ï¿½ï¿½ï¿½ï¿½
+	public static final int  INCREMENT = 0; //ÉýÐò
+	public static final int  DECREMENT = 0; //½µÐò
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 * @param s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	 * @param incOrDec ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç½ï¿½ï¿½ï¿½
+	 * ÅÅÐò¹ý³Ì
+	 * @param s ´øÅÅÊýÁÐ
+	 * @param incOrDec ¿ØÖÆÉýÐò»¹ÊÇ½µÐò
 	 * @return
 	 */
 	public int [] sort(int [] s, int incOrDec){return null;};
 	
 	/**
-	 * ï¿½ï¿½Ó¡ Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ´òÓ¡ Ò»¸öÊýÁÐ
 	 * @param s
 	 */
 	public void print(int [] s)
