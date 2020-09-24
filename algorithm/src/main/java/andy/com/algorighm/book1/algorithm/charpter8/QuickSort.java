@@ -48,9 +48,9 @@ public class QuickSort
 	 *      第三步：border=1,j=3 A[j] > A[0] 那么 border=1,                                			       当前数组为：4,2,8,7,1,3,5,6
 	 *      第四步：border=1,j=4 A[j] < A[0] 那么 border=border+1 = 2, 交换A[j]<->A[border](A[2]与A[4])  当前数组为：4,2,1,7,8,3,5,6           
 	 *      第五步：border=2,j=5 A[j] < A[0] 那么 border=border+1 = 3, 交换A[j]<->A[border](A[3]与A[5])  当前数组为：4,2,1,3,8,7,5,6  
-	 *      第六步：border=3,j=6 A[j] > A[0] 										     			        当前数组为：4,2,1,3,8,7,5,6  
-	 *      第七步：border=3,j=7 A[j] > A[0] 										 			                     当前数组为：4,2,1,3,8,7,5,6 
-	 *      第 八步:border=3,j=8; j>=A.length 交换A[border]<->A[0](A[3]与A[0])					                     当前数组为：3,2,1,4,8,7,5,6  返回 border  
+	 *      第六步：border=3,j=6 A[j] > A[0] 										     			   当前数组为：4,2,1,3,8,7,5,6
+	 *      第七步：border=3,j=7 A[j] > A[0] 										 			       当前数组为：4,2,1,3,8,7,5,6
+	 *      第 八步:border=3,j=8; j>=A.length 交换A[border]<->A[0](A[3]与A[0])					        当前数组为：3,2,1,4,8,7,5,6  返回 border
 	 * @param A 数组
 	 * @pivot 轴心的位置
 	 * @return pivot的新位置
