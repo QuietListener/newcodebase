@@ -34,7 +34,7 @@ public class TestClassLoader {
         //打印false 因为不是一个classLoader加载的
         System.out.println(TestClassLoader.class.isInstance(obj1));
 
-d
+        //两个ClassLoader不一样
         TestClassLoader obj2 = new TestClassLoader();
         System.out.println(obj1.getClass().getClassLoader());
         System.out.println(obj2.getClass().getClassLoader());
