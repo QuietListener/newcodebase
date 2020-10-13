@@ -14,6 +14,7 @@
         <module>javaBasic</module>
         <module>algorithm</module>
         <module>jvm</module>
+        <module>desingpattern</module>
     </modules>
 
     <dependencyManagement>
