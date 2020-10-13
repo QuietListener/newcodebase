@@ -1,15 +1,14 @@
 package andy.com.designpattern.type_interface.adapter;
 
 
-
 /**
- * 类的适配器模式
+ * 对象的适配器模式
  * 模式所涉及的角色有：
  * 1. 目标(Target)角色：这就是所期待得到的接口。注意：由于这里讨论的是类适配器模式，因此目标不可以是类。
  * 2. 源(Adapee)角色：现在需要适配的接口。
  * 3. 适配器(Adaper)角色：适配器类是本模式的核心。适配器把源接口转换成目标接口。显然，这一角色不可以是接口，而必须是具体类。
  */
-public class AdaptorClassTest {
+public class AdaptorObjectTest {
 
 
     /**
@@ -45,7 +44,18 @@ public class AdaptorClassTest {
     /**
      * 适配器
      */
-    static class Adapter extends Adaptee implements Target {
+    static class Adapter implements Target {
+
+        private Adaptee adaptee;
+
+        public Adapter(Adaptee adaptee) {
+            this.adaptee = adaptee;
+        }
+
+        @Override
+        public void existsMethod() {
+            this.adaptee.existsMethod();
+        }
 
         @Override
         public void newMethod() {
@@ -55,7 +65,8 @@ public class AdaptorClassTest {
 
 
     public static void main(String[] args) {
-        Target t = new Adapter();
+        Adaptee adaptee = new Adaptee();
+        Target t = new Adapter(adaptee);
         t.existsMethod();//调用老方法
         t.newMethod();//调用新方法
     }
