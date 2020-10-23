@@ -15,6 +15,7 @@
         <module>algorithm</module>
         <module>jvm</module>
         <module>desingpattern</module>
+        <module>socket</module>
     </modules>
 
     <dependencyManagement>
