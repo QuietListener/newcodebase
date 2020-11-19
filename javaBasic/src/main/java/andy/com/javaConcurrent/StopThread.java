@@ -20,6 +20,8 @@ public class StopThread {
         @Override
         public void run() {
             while(on && !Thread.currentThread().isInterrupted()){
+                ThreadLocal t =null;
+                t.get()
                 i++;
             }
 
