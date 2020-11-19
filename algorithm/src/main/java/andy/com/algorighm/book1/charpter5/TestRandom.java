@@ -17,7 +17,7 @@ public class TestRandom
 		HashMap<Integer,Integer> ret = new HashMap<Integer,Integer>();
 		for(int i = 0; i<100000; i++)
 		{   
-			//  ÔÚµ÷ÓÃ1000000´ÎÖÐÃ¿Ò»¸öËæ»úÊý³öÏÖµÄ´ÎÊý
+			//  åœ¨è°ƒç”¨1000000æ¬¡ä¸­æ¯ä¸€ä¸ªéšæœºæ•°å‡ºçŽ°çš„æ¬¡æ•°
 			int randNum= rand.random01();
 		
 			if(!ret.containsKey((Integer)randNum))
@@ -35,7 +35,7 @@ public class TestRandom
 		
 		for(Entry<Integer, Integer> entry:ret.entrySet())
 		{
-			System.out.println(entry.getKey()+":"+entry.getValue()+" ´Î");
+			System.out.println(entry.getKey()+":"+entry.getValue()+" æ¬¡");
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class TestRandom
 		HashMap<Integer,Integer> ret = new HashMap<Integer,Integer>();
 		for(int i = 0; i<100000; i++)
 		{   
-			//  ÔÚµ÷ÓÃ1000000´ÎÖÐÃ¿Ò»¸öËæ»úÊý³öÏÖµÄ´ÎÊý
+			//  åœ¨è°ƒç”¨1000000æ¬¡ä¸­æ¯ä¸€ä¸ªéšæœºæ•°å‡ºçŽ°çš„æ¬¡æ•°
 			int randNum= rand.random0n(6);
 		
 			if(!ret.containsKey((Integer)randNum))
@@ -65,7 +65,7 @@ public class TestRandom
 		
 		for(Entry<Integer, Integer> entry:ret.entrySet())
 		{
-			System.out.println(entry.getKey()+":"+entry.getValue()+" ´Î");
+			System.out.println(entry.getKey()+":"+entry.getValue()+" æ¬¡");
 		}
 		
 	}
@@ -78,7 +78,7 @@ public class TestRandom
 		HashMap<Integer,Integer> ret = new HashMap<Integer,Integer>();
 		for(int i = 0; i<100000; i++)
 		{   
-			//  ÔÚµ÷ÓÃ1000000´ÎÖÐÃ¿Ò»¸öËæ»úÊý³öÏÖµÄ´ÎÊý
+			//  åœ¨è°ƒç”¨1000000æ¬¡ä¸­æ¯ä¸€ä¸ªéšæœºæ•°å‡ºçŽ°çš„æ¬¡æ•°
 			int randNum= rand.randomab(3,10);
 		
 			if(!ret.containsKey((Integer)randNum))
@@ -96,7 +96,7 @@ public class TestRandom
 		
 		for(Entry<Integer, Integer> entry:ret.entrySet())
 		{
-			System.out.println(entry.getKey()+":"+entry.getValue()+" ´Î");
+			System.out.println(entry.getKey()+":"+entry.getValue()+" æ¬¡");
 		}
 	}
 

@@ -3,25 +3,25 @@ package andy.com.algorighm.book1.charpter2;
 import andy.com.algorighm.book1.Search;
 
 /**
- * ¶ş·Ö²éÕÒÀà
+ * äºŒåˆ†æŸ¥æ‰¾ç±»
  * @author junjun
  *
  */
 public class BinarySearch extends Search
 {
 	/**
-	 *  ¶ş·Ö²éÕÒ ÔÚs[p...q]ÉÏ²éÕÒr
-	 *  @param s ´ı²éÕÒµÄÊı×é °´ÕÕÉıĞòÅÅÁĞ
+	 *  äºŒåˆ†æŸ¥æ‰¾ åœ¨s[p...q]ä¸ŠæŸ¥æ‰¾r
+	 *  @param s å¾…æŸ¥æ‰¾çš„æ•°ç»„ æŒ‰ç…§å‡åºæ’åˆ—
 	 *  @param p 
 	 *  @param q
-	 *  @return Èç¹ûÕÒµ½ ·µ»ØÕÒµ½ÔªËØµÄÏÂ±ê,·ñÔò·µ»Ø-1
+	 *  @return å¦‚æœæ‰¾åˆ° è¿”å›æ‰¾åˆ°å…ƒç´ çš„ä¸‹æ ‡,å¦åˆ™è¿”å›-1
 	 */
 	public int search(int[] s, int p, int q,int r)
 	{		
 		while(p <=q)
 		{
-			int middle = (p+q)/2;              //È¡ÖĞ¼äµÄÎ»ÖÃ½øĞĞ¶ş·Ö
-			if(r == s[middle]) return middle;  //Èç¹ûÕÒµ½·µ»Ømiddle
+			int middle = (p+q)/2;              //å–ä¸­é—´çš„ä½ç½®è¿›è¡ŒäºŒåˆ†
+			if(r == s[middle]) return middle;  //å¦‚æœæ‰¾åˆ°è¿”å›middle
 			else if(r<s[middle]) q = middle-1;
 			else p = middle+1;
 		}

@@ -3,7 +3,7 @@ package andy.com.algorighm.book1.charpter2;
 import andy.com.algorighm.book1.Sort;
 
 /**
- * ¹é²¢ÅÅĞò 
+ * å½’å¹¶æ’åº 
  * @author buptjunjun
  *
  */
@@ -18,18 +18,18 @@ public class MergeSort extends Sort
 	}
 	
 	/**
-	 * ¶ÔÊı×é s½øĞĞ¹é²¢ÅÅĞò,p<<q<r
-	 * ÆäÖĞpµ½s[p,q] ºÍs[q+1,r]¶¼ÊÇÅÅºÃĞòµÄ£¬½«ËûÃÇºÏ²¢³ÉÒ»¸öÅÅºÃĞòµÄÊı×é²¢Ìæ»»s[p,r]
-	 * @param s Êı×é
+	 * å¯¹æ•°ç»„ sè¿›è¡Œå½’å¹¶æ’åº,p<<q<r
+	 * å…¶ä¸­påˆ°s[p,q] å’Œs[q+1,r]éƒ½æ˜¯æ’å¥½åºçš„ï¼Œå°†ä»–ä»¬åˆå¹¶æˆä¸€ä¸ªæ’å¥½åºçš„æ•°ç»„å¹¶æ›¿æ¢s[p,r]
+	 * @param s æ•°ç»„
 	 * @param p 
 	 * @param q
 	 * @param r
 	 */
 	private void merge(int [] s,int p,int q,int r)
 	{
-		int n1 = q-p+1; //×ó±ßÒ»¶Îs[p,q]µÄ³¤¶È
-		int n2 = r-q;   //ÓÒ±ßÒ»¶Îs[q+1,r]µÄ³¤¶È
-		//¶à·ÖÅäÒ»¸öÔªËØ×÷ÎªÉÚ±ø
+		int n1 = q-p+1; //å·¦è¾¹ä¸€æ®µs[p,q]çš„é•¿åº¦
+		int n2 = r-q;   //å³è¾¹ä¸€æ®µs[q+1,r]çš„é•¿åº¦
+		//å¤šåˆ†é…ä¸€ä¸ªå…ƒç´ ä½œä¸ºå“¨å…µ
 		int [] L = new int [n1+1]; 
 		int [] R = new int [n2+1];
 		
@@ -37,17 +37,17 @@ public class MergeSort extends Sort
 			L[i] = s[p+i];
 		for(int i = 0; i < n2; i++)
 			R[i] = s[q+1+i];
-		//×îºóÒ»¸öÔªËØÉÚ±ø
+		//æœ€åä¸€ä¸ªå…ƒç´ å“¨å…µ
 		L[n1] = Integer.MAX_VALUE; 
 		R[n2] = Integer.MAX_VALUE;
 		
-		// ¿ªÊ¼¹é²¢
+		// å¼€å§‹å½’å¹¶
 		int i =0; 
 		int j = 0;
 		int cadidate = 0;
 		for(int k = p; k <= r; k++)
 		{
-			// Ñ¡Ôñ½ÏĞ¡µÄ×÷Îª²åÈë¶ÔÏó
+			// é€‰æ‹©è¾ƒå°çš„ä½œä¸ºæ’å…¥å¯¹è±¡
 			if(L[i] < R[j])
 			{
 				cadidate = L[i];
@@ -58,13 +58,13 @@ public class MergeSort extends Sort
 				cadidate = R[j];
 				j++;
 			}
-			//²åÈë
+			//æ’å…¥
 			s[k] = cadidate;
 		}
 	}
 	
 	/**
-	 * µİ¹é½øĞĞmergeÅÅĞò
+	 * é€’å½’è¿›è¡Œmergeæ’åº
 	 * @param s
 	 * @param p
 	 * @param r

@@ -3,12 +3,12 @@ package andy.com.algorighm.book1.charpter7;
 import java.util.Arrays;
 
 /**
- * ��������������� Ͱ����
+ * 线性排序相关内容 桶排序
  */
 
 public class BucketSort {
 
-    //������
+    //辅助类
     class Elem {
         int value;
         Elem next = null;
@@ -23,10 +23,10 @@ public class BucketSort {
     }
 
     /**
-     * Ͱ���� ������ʱ�������һ�֣�������Ҫ�϶�Ķ����ڴ�,������ҪһЩ��ǿ��������������Ҫ֪��������Ԫ�ض���ĳһ����Χ ����[0,k],���Ҵ������г��־��ȷֲ�
-     * Ͱ�����ǽ� ����Ԫ�طֵ����������У��������Χ�ڽ�������Ȼ�����������
-     * ����   ��10 ��������
-     * ��������                        ���䵽Ͱ��						 ��˳���Ѽ�
+     * 桶排序 是线性时间排序的一种，但是需要较多的额外内存,并且需要一些较强的条件：比如需要知道待排序元素都在某一个范围 比如[0,k],并且带排数列呈现均匀分布
+     * 桶排序是将 带排元素分到几个区间中，在这个范围内进行排序，然后再组合起来
+     * 例如   按10 来分区间
+     * 待排数列                        非配到桶中						 按顺序搜集
      * <p>
      * 78           [0-10]
      * 17			[11-20]->12->17
@@ -39,23 +39,23 @@ public class BucketSort {
      * 23			[81-90]
      * 28			[91-100]->94
      *
-     * @param A        ��������
-     * @param maxElem  ����������Ԫ�ض�С�ڵ�����maxElem
-     * @param minElem  ����������Ԫ�ض����ڵ����ظ���maxElem
-     * @param interval ��ô����ľͰ�ļ��
+     * @param A        待排数组
+     * @param maxElem  数组中所有元素都小于等于与maxElem
+     * @param minElem  数组中所有元素都大于等于呢个与maxElem
+     * @param interval 怎么分配木桶的间隔
      * @return
      */
     public int[] sort(int A[], int minElem, int maxElem, int interval) {
-        // Ͱ�ĸ���
+        // 桶的个数
         int num = (maxElem - minElem) / interval + 1;
 
-        //��ʼ������ľͰΪnull
+        //初始化所有木桶为null
         Elem[] buckets = new Elem[num];
         Arrays.fill(buckets, null);
 
-        //��ÿһ��Ԫ�ط��䵽ÿһ��Ͱ��
+        //将每一个元素分配到每一个桶中
         for (int i = 0; i < A.length; i++) {
-            // ��A[i]���䵽��[(A[i]-minElem)/10]��Ͱ��
+            // 将A[i]分配到第[(A[i]-minElem)/10]个桶中
             int which = (A[i] - minElem) / 10;
             Elem bucket = new Elem(A[i]);
 
@@ -67,7 +67,7 @@ public class BucketSort {
                     head = head.next;
                 }
 
-                //�ҵ������head,��������head��
+                //找到插入点head,并插入在head后
                 Elem tmp = head.next;
                 head.next = bucket;
                 bucket.next = tmp;
@@ -75,10 +75,10 @@ public class BucketSort {
             }
         }
 
-        // ��˳���Ѽ�ÿһ��Ͱ
+        // 按顺序搜集每一个桶
         int j = 0;
         for (int i = 0; i < buckets.length; i++) {
-            //ȡ��һ��ľͰ�����Ѽ�����ľͰ��Ԫ��
+            //取得一个木桶并且搜集所有木桶的元素
             Elem head = buckets[i];
             while (head != null) {
                 A[j++] = head.getValue();

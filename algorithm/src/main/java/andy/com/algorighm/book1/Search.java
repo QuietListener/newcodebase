@@ -1,19 +1,19 @@
 package andy.com.algorighm.book1;
 
 /**
- * ²éÕÒ»ùÀà
+ * æŸ¥æ‰¾åŸºç±»
  * @author junjun
  *
  */
 public class Search
 {
 	/**
-	 * ÔÚÊı×és[p...q]ÉÏ²éÕÒr
-	 * @param s ´ı²éÊı×é
+	 * åœ¨æ•°ç»„s[p...q]ä¸ŠæŸ¥æ‰¾r
+	 * @param s å¾…æŸ¥æ•°ç»„
 	 * @param p
 	 * @param q
-	 * @param r ´ı²éµÄÊı
-	 * @return ÕÒµ½·µ»Ø×ø±ê£¬·ñÔò·µ»Ø-1
+	 * @param r å¾…æŸ¥çš„æ•°
+	 * @return æ‰¾åˆ°è¿”å›åæ ‡ï¼Œå¦åˆ™è¿”å›-1
 	 */
 	public int search(int [] s,int p,int q,int r) {return -1;};	
 }

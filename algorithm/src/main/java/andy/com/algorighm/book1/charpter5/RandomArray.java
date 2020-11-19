@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 /**
- * ½«Ò»¸öÊı×éµÄËæ»úÅÅÁĞ
+ * å°†ä¸€ä¸ªæ•°ç»„çš„éšæœºæ’åˆ—
  *
  * @author junjun
  */
@@ -12,9 +12,9 @@ public class RandomArray {
     private Random r = new Random();
 
     /**
-     * ¸¨ÖúÀà
-     * score´æ·ÅËæ»ú·ÖÊı
-     * num´æ·Å´ıÅÅÁĞµÄÊı
+     * è¾…åŠ©ç±»
+     * scoreå­˜æ”¾éšæœºåˆ†æ•°
+     * numå­˜æ”¾å¾…æ’åˆ—çš„æ•°
      *
      * @author andyWebsense
      */
@@ -41,19 +41,19 @@ public class RandomArray {
     }
 
     /**
-     * ½«Ò»¸öÊıÁĞ´òÂÒÎªËæ»úÊıÁĞ
-     * Ëã·¨£º
-     * 1¡¢È¡µÃÊı×éµÄ³¤¶Èn,¼ÆËãÒ»¸öÉÏÏß upperLimit = n^3
-     * 2¡¢¶ÔÃ¿Ò»¸öÊı×éÔªËØÉú³ÉÒ»¸ö[0,upperLimit]ÄÚµÄËæ»ú·ÖÊıscore£¬Ã¿Ò»¸öËæ»úÊı²»Í¬
-     * 3¡¢°´ÕÕscore¶ÔÕâ¸öÊıÁĞ½øĞĞÅÅĞò(µİÔö£¬µİ¼õ¾ù¿É)
-     * 4¡¢µÃµ½Ëæ»úÊıÁĞ
-     * Ê±¼ä¸´ÔÓ¶ÈÎªnlogn ÒòÎª ÅÅĞòÊÇnlognµÄ
+     * å°†ä¸€ä¸ªæ•°åˆ—æ‰“ä¹±ä¸ºéšæœºæ•°åˆ—
+     * ç®—æ³•ï¼š
+     * 1ã€å–å¾—æ•°ç»„çš„é•¿åº¦n,è®¡ç®—ä¸€ä¸ªä¸Šçº¿ upperLimit = n^3
+     * 2ã€å¯¹æ¯ä¸€ä¸ªæ•°ç»„å…ƒç´ ç”Ÿæˆä¸€ä¸ª[0,upperLimit]å†…çš„éšæœºåˆ†æ•°scoreï¼Œæ¯ä¸€ä¸ªéšæœºæ•°ä¸åŒ
+     * 3ã€æŒ‰ç…§scoreå¯¹è¿™ä¸ªæ•°åˆ—è¿›è¡Œæ’åº(é€’å¢ï¼Œé€’å‡å‡å¯)
+     * 4ã€å¾—åˆ°éšæœºæ•°åˆ—
+     * æ—¶é—´å¤æ‚åº¦ä¸ºnlogn å› ä¸º æ’åºæ˜¯nlognçš„
      *
      * @param array
-     * @return ·µ»ØÒ»¸öÈÅÂÒÒÔºóµÄÊıÁĞ
+     * @return è¿”å›ä¸€ä¸ªæ‰°ä¹±ä»¥åçš„æ•°åˆ—
      */
     public int[] disturb1(int[] array) {
-        //È¡µÃÊı×éµÄ³¤¶Èn,¼ÆËãÒ»¸öÉÏÏß upperLimit = n^3
+        //å–å¾—æ•°ç»„çš„é•¿åº¦n,è®¡ç®—ä¸€ä¸ªä¸Šçº¿ upperLimit = n^3
         int upperlimit = (int) Math.pow(array.length, 3);
 
         HashSet<Item> hset = new HashSet<Item>();
@@ -62,7 +62,7 @@ public class RandomArray {
             i.num = elem;
             i.score = -1;
 
-            // ±£Ö¤Ã¿Ò»¸ö·ÖÊıscore¶¼ÊÇ Î¨Ò»µÄ
+            // ä¿è¯æ¯ä¸€ä¸ªåˆ†æ•°scoreéƒ½æ˜¯ å”¯ä¸€çš„
             while (true) {
                 int randomScore = r.random0n(upperlimit);
                 i.score = randomScore;
@@ -72,11 +72,11 @@ public class RandomArray {
             hset.add(i);
         }
 
-        //°´ÕÕ·ÖÊı¶ÔÊıÁĞ½øĞĞÅÅĞò
+        //æŒ‰ç…§åˆ†æ•°å¯¹æ•°åˆ—è¿›è¡Œæ’åº
         Object[] arrayItem = hset.toArray();
         Arrays.sort(arrayItem);
 
-        // ·µ»Ø ÈÅÂÒºóµÄÊı×é
+        // è¿”å› æ‰°ä¹±åçš„æ•°ç»„
         int[] ret = new int[arrayItem.length];
         for (int i = 0; i < arrayItem.length; i++) {
             Item item = (Item) arrayItem[i];
@@ -89,21 +89,21 @@ public class RandomArray {
 
 
     /**
-     * ½«Ò»¸öÊıÁĞ´òÂÒÎªËæ»úÊıÁĞ
-     * Ëã·¨ ¾ÍÊÇ½»»»µÚi¸öÔªËØÓëi¸öÔªËØºóÃæµÄËæ»úµÄÒ»¸öÔªËØ£º
-     * ÉèÊıÁĞÎªA
+     * å°†ä¸€ä¸ªæ•°åˆ—æ‰“ä¹±ä¸ºéšæœºæ•°åˆ—
+     * ç®—æ³• å°±æ˜¯äº¤æ¢ç¬¬iä¸ªå…ƒç´ ä¸iä¸ªå…ƒç´ åé¢çš„éšæœºçš„ä¸€ä¸ªå…ƒç´ ï¼š
+     * è®¾æ•°åˆ—ä¸ºA
      * for i <- 1 to length(A)
      * swap(A[i],A[Random(i,length(A))])
      * <p>
-     * Ê±¼ä¸´ÔÓ¶ÈÎªnlogn ÒòÎª ÅÅĞòÊÇnlognµÄ
+     * æ—¶é—´å¤æ‚åº¦ä¸ºnlogn å› ä¸º æ’åºæ˜¯nlognçš„
      *
      * @param array
-     * @return ·µ»ØÒ»¸öÈÅÂÒÒÔºóµÄÊıÁĞ
+     * @return è¿”å›ä¸€ä¸ªæ‰°ä¹±ä»¥åçš„æ•°åˆ—
      */
     public int[] disturb2(int[] array) {
-        //È¡µÃÊı×éµÄ³¤¶È
+        //å–å¾—æ•°ç»„çš„é•¿åº¦
         int length = array.length;
-        // copy Ò»·İ
+        // copy ä¸€ä»½
         int[] tmp = Arrays.copyOf(array, length);
 
         for (int i = 0; i < length - 1; i++) {
@@ -120,7 +120,7 @@ public class RandomArray {
     }
 
     public static void main(String[] args) {
-        // ´ı´òÂÒµÄÊı×é
+        // å¾…æ‰“ä¹±çš„æ•°ç»„
         int[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         print(array, 0, array.length - 1, "original array");
 

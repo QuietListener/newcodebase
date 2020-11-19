@@ -8,10 +8,10 @@ import andy.com.algorighm.book1.Sort;
  */
 public class InsertSort extends Sort {
     /**
-     * 插入排序
+     * 鎻掑叆鎺掑簭
      *
-     * @param s        带排数列
-     * @param incOrDec 控制升序还是降序
+     * @param s        甯︽帓鏁板垪
+     * @param incOrDec 鎺у埗鍗囧簭杩樻槸闄嶅簭
      * @return
      */
     @Override
@@ -20,14 +20,14 @@ public class InsertSort extends Sort {
         for (int i = 1; i < s.length; i++) {
             int key = s[i];
             int j = i - 1;
-            //下面将key插入到已经排好的数列中去
-            if (incOrDec == Sort.INCREMENT) //升序
+            //涓嬮潰灏唊ey鎻掑叆鍒板凡缁忔帓濂界殑鏁板垪涓幓
+            if (incOrDec == Sort.INCREMENT) //鍗囧簭
             {
                 while (j >= 0 && key < s[j]) {
                     s[j + 1] = s[j];
                     j--;
                 }
-            } else if (incOrDec == Sort.DECREMENT) //降序
+            } else if (incOrDec == Sort.DECREMENT) //闄嶅簭
             {
                 while (j >= 0 && key > s[j]) {
                     s[j + 1] = s[j];

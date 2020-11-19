@@ -1,38 +1,38 @@
 package andy.com.algorighm.book1.charpter15;
 
 /**
- * ¶¯Ì¬¹æ»®:¾ØÕóÁ´³Ë·¨,×î³¤¹«¹²×ÓĞòÁĞ
+ * åŠ¨æ€è§„åˆ’:çŸ©é˜µé“¾ä¹˜æ³•,æœ€é•¿å…¬å…±å­åºåˆ—
  */
 
 public class DynamicProgramming {
 
 
     /**
-     * ¶¯Ì¬¹æ»® Çó¾ØÕóÁ´³Ë·¨×îÓÅ
+     * åŠ¨æ€è§„åˆ’ æ±‚çŸ©é˜µé“¾ä¹˜æ³•æœ€ä¼˜
      *
      * @param p
      */
     public void MatrixChainOrder(int[] p) {
-        //¼ÆËã¾ØÕóÁ´³Ë·¨×îÓÅÖµ
-        //m[i,j]±íÊ¾Ai,...,Aj ³Ë·¨×îÓÅµÄ±êÁ¿³Ë·¨´ÎÊı
+        //è®¡ç®—çŸ©é˜µé“¾ä¹˜æ³•æœ€ä¼˜å€¼
+        //m[i,j]è¡¨ç¤ºAi,...,Aj ä¹˜æ³•æœ€ä¼˜çš„æ ‡é‡ä¹˜æ³•æ¬¡æ•°
         int[][] m = null;
-        //s[i][j]±íÊ¾ ½«Ai,...,Aj×îÓÅÊ±µÄ·Ö½ç(Ai..As)(As+1..Aj)
+        //s[i][j]è¡¨ç¤º å°†Ai,...,Ajæœ€ä¼˜æ—¶çš„åˆ†ç•Œ(Ai..As)(As+1..Aj)
         int[][] s = null;
 
         int n = p.length - 1;
         m = new int[n + 1][n + 1];
         s = new int[n + 1][n + 1];
-        //µ¥¶ÀÒ»¸ö¾ØÕóĞèÒª0´Î±êÁ¿²Ù×÷
+        //å•ç‹¬ä¸€ä¸ªçŸ©é˜µéœ€è¦0æ¬¡æ ‡é‡æ“ä½œ
         for (int i = 1; i <= n; i++)
             m[i][i] = 0;
 
-        //l±íÊ¾Ò»¸öµ±Ç°µÄm[i,j]µÄ³¤¶È
+        //lè¡¨ç¤ºä¸€ä¸ªå½“å‰çš„m[i,j]çš„é•¿åº¦
         for (int l = 2; l <= n; l++) {
             for (int i = 1; i <= n - l + 1; i++) {
                 int j = i + l - 1;
                 m[i][j] = Integer.MAX_VALUE;
 
-                //ÕÒ×îĞ¡µÄÒ»¸ö ×÷Îªm[i,j]µÄ×îÓÅÖµ
+                //æ‰¾æœ€å°çš„ä¸€ä¸ª ä½œä¸ºm[i,j]çš„æœ€ä¼˜å€¼
                 for (int k = i; k <= j - 1; k++) {
                     int q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];
                     if (q < m[i][j]) {
@@ -44,13 +44,13 @@ public class DynamicProgramming {
         }
         for (int i = 1; i < p.length; i++)
             System.out.print("A" + i + "(" + p[i - 1] + "," + p[i] + ")  ");
-        System.out.print("\n×îÓÅµÄ¾ØÕó¼ÆËãË³ĞòÊÇ:");
+        System.out.print("\næœ€ä¼˜çš„çŸ©é˜µè®¡ç®—é¡ºåºæ˜¯:");
         printOptimalParens(s, 1, n);
-        System.out.println("\nĞèÒªÖ´ĞĞµÄ±êÁ¿¼ÆËã´ÎÊıÎª:" + m[1][n]);
+        System.out.println("\néœ€è¦æ‰§è¡Œçš„æ ‡é‡è®¡ç®—æ¬¡æ•°ä¸º:" + m[1][n]);
     }
 
     /**
-     * ´òÓ¡ ×îÓÅµÄ¾ØÕó¼ÆËãË³Ğò
+     * æ‰“å° æœ€ä¼˜çš„çŸ©é˜µè®¡ç®—é¡ºåº
      *
      * @param s
      * @param i
@@ -68,8 +68,8 @@ public class DynamicProgramming {
     }
 
     /**
-     * ¹«¹²×î³¤×ÓĞòÁĞ longest common sequence
-     * ¾ØÕóc
+     * å…¬å…±æœ€é•¿å­åºåˆ— longest common sequence
+     * çŸ©é˜µc
      *
      * @param str1
      * @param str2
@@ -114,7 +114,7 @@ public class DynamicProgramming {
         }
         System.out.println("str1:" + new String(str1).substring(1));
         System.out.println("str2:" + new String(str2).substring(1));
-        System.out.println("×î´ó¹«¹²×ÓĞòÁĞÎª:");
+        System.out.println("æœ€å¤§å…¬å…±å­åºåˆ—ä¸º:");
         printLCS(b, str1, str1.length - 1, str2.length - 1);
     }
 
@@ -133,7 +133,7 @@ public class DynamicProgramming {
 
 
     /**
-     * ×î³¤¹«¹²×Ö´®
+     * æœ€é•¿å…¬å…±å­—ä¸²
      */
     public void LCS1(char[] str1, char[] str2) {
         int posi = 0;
@@ -176,26 +176,26 @@ public class DynamicProgramming {
         }
         System.out.println("str1:" + new String(str1).substring(1));
         System.out.println("str2:" + new String(str2).substring(1));
-        System.out.println("×î´ó¹«¹²×Ó´®Îª:" + new String(str1).subSequence(posi - max + 1, posi + 1));
+        System.out.println("æœ€å¤§å…¬å…±å­ä¸²ä¸º:" + new String(str1).subSequence(posi - max + 1, posi + 1));
 
     }
 
 
     public static void main(String[] args) {
         DynamicProgramming dp = new DynamicProgramming();
-        //¶¯Ì¬¹æ»®¼ÆËã×îÓÅµÄ¾ØÕó¼ÆËãË³Ğò
-        System.out.println("---¶¯Ì¬¹æ»®¼ÆËã×îÓÅµÄ¾ØÕó¼ÆËãË³Ğò---");
+        //åŠ¨æ€è§„åˆ’è®¡ç®—æœ€ä¼˜çš„çŸ©é˜µè®¡ç®—é¡ºåº
+        System.out.println("---åŠ¨æ€è§„åˆ’è®¡ç®—æœ€ä¼˜çš„çŸ©é˜µè®¡ç®—é¡ºåº---");
         int[] p = {30, 35, 15, 5, 10, 20, 25};
         dp.MatrixChainOrder(p);
 
-        //×î³¤¹«¹²ĞòÁĞ str1[0]Ã»ÓĞÓÃ
-        System.out.println("\n---×î´ó¹«¹²×ÓĞòÁĞ---");
+        //æœ€é•¿å…¬å…±åºåˆ— str1[0]æ²¡æœ‰ç”¨
+        System.out.println("\n---æœ€å¤§å…¬å…±å­åºåˆ—---");
         char[] str1 = {'&', 'b', 'd', 'c', 'a', 'b'};
         char[] str2 = {'&', 'a', 'b', 'c', 'b', 'd', 'a', 'b'};
         dp.LCS(str1, str2);
 
-        //×î³¤¹«¹²ĞòÁĞ str1[0]Ã»ÓĞÓÃ
-        System.out.println("\n\n---×î´ó¹«¹²×ÓĞòÁĞ---");
+        //æœ€é•¿å…¬å…±åºåˆ— str1[0]æ²¡æœ‰ç”¨
+        System.out.println("\n\n---æœ€å¤§å…¬å…±å­åºåˆ—---");
         char[] str3 = {'&', 'b', 'd', 'c', 'a', 'b', 'a'};
         char[] str4 = {'&', 'a', 'd', 'c', 'a', 'd', 'a', 'b'};
         dp.LCS1(str3, str4);

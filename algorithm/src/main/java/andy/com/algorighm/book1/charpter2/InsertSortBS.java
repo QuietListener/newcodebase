@@ -3,7 +3,7 @@ package andy.com.algorighm.book1.charpter2;
 import andy.com.algorighm.book1.Sort;
 
 /**
- * Ê¹ÓÃ¶ş·ÖËÑË÷¸Ä½øµÄ²åÈëÅÅĞò
+ * ä½¿ç”¨äºŒåˆ†æœç´¢æ”¹è¿›çš„æ’å…¥æ’åº
  * @author buptjunjun
  * @time 2013-1-22
  *
@@ -12,9 +12,9 @@ public class InsertSortBS extends Sort
 {	
 	/**
 	 *
-	 * ²åÈëÅÅĞò
-	 * @param s ´øÅÅÊıÁĞ
-	 * @param incOrDec ¿ØÖÆÉıĞò»¹ÊÇ½µĞò
+	 * æ’å…¥æ’åº
+	 * @param s å¸¦æ’æ•°åˆ—
+	 * @param incOrDec æ§åˆ¶å‡åºè¿˜æ˜¯é™åº
 	 * @return
 	 */
 	@Override
@@ -27,8 +27,8 @@ public class InsertSortBS extends Sort
 			if(key >= s[i-1])
 				continue;
 				
-			//ÏÂÃæ½øĞĞ¶ş·Ö²éÕÒ Ñ°ÕÒ²åÈëµã
-			int insertPos = -1;// p¾ÍÊÇÒª²åÈëµÄÎ»ÖÃ
+			//ä¸‹é¢è¿›è¡ŒäºŒåˆ†æŸ¥æ‰¾ å¯»æ‰¾æ’å…¥ç‚¹
+			int insertPos = -1;// på°±æ˜¯è¦æ’å…¥çš„ä½ç½®
 			int p = 0;
 			int q = i-1; 
 			int middle = p;
@@ -41,17 +41,17 @@ public class InsertSortBS extends Sort
 				else p=middle+1;
 			}
 
-			//ÕÒµ½²åÈëµã ¸ù¾İÉÏÃæÑ­»·ÖÕÖ¹Ìõ¼ş ¾ö¶¨²åÈëµã
-			//Èç¹û ÊÇÓÉp==qÌø³öÀ´µÄ ²åÈëµã¾ÍÊÇp
-			//Èç¹ûÊÇÓÉif(s[middle] == key) Ìø³öÀ´µÄ ²åÈëµã¾ÍÊÇmiddle
+			//æ‰¾åˆ°æ’å…¥ç‚¹ æ ¹æ®ä¸Šé¢å¾ªç¯ç»ˆæ­¢æ¡ä»¶ å†³å®šæ’å…¥ç‚¹
+			//å¦‚æœ æ˜¯ç”±p==qè·³å‡ºæ¥çš„ æ’å…¥ç‚¹å°±æ˜¯p
+			//å¦‚æœæ˜¯ç”±if(s[middle] == key) è·³å‡ºæ¥çš„ æ’å…¥ç‚¹å°±æ˜¯middle
 			insertPos = p==q?q:middle;
 			
-			//½«²åÈëµãºóµÄÔªËØÒÀ´ÎÍùºóÒÆ¶¯
+			//å°†æ’å…¥ç‚¹åçš„å…ƒç´ ä¾æ¬¡å¾€åç§»åŠ¨
 			for(int j = i; j>insertPos ; j--)
 			{
 				s[j] = s[j-1];
 			}
-			//½«ÔªËØ²åÈë²åÈëµã 
+			//å°†å…ƒç´ æ’å…¥æ’å…¥ç‚¹ 
 			s[insertPos] = key;
 		}		
 		return s;

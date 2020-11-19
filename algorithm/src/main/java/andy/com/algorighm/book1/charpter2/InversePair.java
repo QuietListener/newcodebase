@@ -3,19 +3,19 @@ package andy.com.algorighm.book1.charpter2;
 import andy.com.algorighm.book1.Sort;
 
 /**
- * µÚ¶þÕÂ Ï°Ìâ2-4
- * Êý×és[0...N]ÖÐÈç¹ûi<j ,s[i]>j¾Í±íÊ¾ÓÐÒ»¸öÄæÐò¶Ô
- * ¼ÆËãÈÎÒâÊý×éÖÐµÄÄæÐò¶ÔÊý
+ * ç¬¬äºŒç«  ä¹ é¢˜2-4
+ * æ•°ç»„s[0...N]ä¸­å¦‚æžœi<j ,s[i]>jå°±è¡¨ç¤ºæœ‰ä¸€ä¸ªé€†åºå¯¹
+ * è®¡ç®—ä»»æ„æ•°ç»„ä¸­çš„é€†åºå¯¹æ•°
  * @author junjun
  *
  */
 public class InversePair extends Sort
 {
-	//ËãÄæÐò¶ÔµÄ¸öÊý
+	//ç®—é€†åºå¯¹çš„ä¸ªæ•°
 	private static int count = 0;
 	
 	/**
-	 * Ê¹ÓÃ¹é²¢ÅÅÐòÇóÄæÐò¶Ô
+	 * ä½¿ç”¨å½’å¹¶æŽ’åºæ±‚é€†åºå¯¹
 	 * @param s
 	 */
 	public int countInversePair(int [] s)
@@ -26,17 +26,17 @@ public class InversePair extends Sort
 	}
 
 	/**
-	 * ¶ÔÊý×é s½øÐÐ¹é²¢ÅÅÐò,p<<q<r
-	 * ÆäÖÐpµ½s[p,q] ºÍs[q+1,r]¶¼ÊÇÅÅºÃÐòµÄ£¬½«ËûÃÇºÏ²¢³ÉÒ»¸öÅÅºÃÐòµÄÊý×é²¢Ìæ»»s[p,r],ÔÚÕâ¸ö¹ý³ÌÖÐÕÒµ½ÄæÐò¶ÔµÄ¸öÊý
-	 * @param s Êý×é
+	 * å¯¹æ•°ç»„ sè¿›è¡Œå½’å¹¶æŽ’åº,p<<q<r
+	 * å…¶ä¸­påˆ°s[p,q] å’Œs[q+1,r]éƒ½æ˜¯æŽ’å¥½åºçš„ï¼Œå°†ä»–ä»¬åˆå¹¶æˆä¸€ä¸ªæŽ’å¥½åºçš„æ•°ç»„å¹¶æ›¿æ¢s[p,r],åœ¨è¿™ä¸ªè¿‡ç¨‹ä¸­æ‰¾åˆ°é€†åºå¯¹çš„ä¸ªæ•°
+	 * @param s æ•°ç»„
 	 * @param p 
 	 * @param q
 	 * @param r
 	 */
 	private void merge(int [] s,int p,int q,int r)
 	{
-		int n1 = q-p+1; //×ó±ßÒ»¶Îs[p,q]µÄ³¤¶È
-		int n2 = r-q;   //ÓÒ±ßÒ»¶Îs[q+1,r]µÄ³¤¶È
+		int n1 = q-p+1; //å·¦è¾¹ä¸€æ®µs[p,q]çš„é•¿åº¦
+		int n2 = r-q;   //å³è¾¹ä¸€æ®µs[q+1,r]çš„é•¿åº¦
 		int [] L = new int [n1]; 
 		int [] R = new int [n2];
 		
@@ -45,7 +45,7 @@ public class InversePair extends Sort
 		for(int i = 0; i < n2; i++)
 			R[i] = s[q+1+i];
 	
-		//´òÓ¡µ±Ç°×ó±ßÓëÓÒ±ßµÄÊý×é LºÍR
+		//æ‰“å°å½“å‰å·¦è¾¹ä¸Žå³è¾¹çš„æ•°ç»„ Lå’ŒR
 		System.out.println("\n----------");
 		System.out.print("L:");
 		this.print(L);
@@ -53,30 +53,30 @@ public class InversePair extends Sort
 		this.print(R);
 		System.out.println("");
 		
-		// ¿ªÊ¼¹é²¢
+		// å¼€å§‹å½’å¹¶
 		int i =0; 
 		int j = 0;
 		int k = p;
 		while(i < n1 && j < n2)
 		{
-			// Ñ¡Ôñ½ÏÐ¡µÄ×÷Îª²åÈë¶ÔÏó
+			// é€‰æ‹©è¾ƒå°çš„ä½œä¸ºæ’å…¥å¯¹è±¡
 			if(L[i] <= R[j])
 			{
 				s[k++] =  L[i++];
 			}
-			else //Èç¹ûL[i]>R[j]¿ÉÄÜ´æÔÚÄæÐò¶Ô
+			else //å¦‚æžœL[i]>R[j]å¯èƒ½å­˜åœ¨é€†åºå¯¹
 			{
-				/*ÓÒ±ßÃ¿²åÈëÒ»¸öÊý¾ÍÓÐn1-i¸öÄæÐò¶Ô´æÔÚ,ÒòÎªÊÇÓÒ±ßÊ£ÏÂµÄÃ¿Ò»¸öÔªËØL[i...n1]¶¼±ÈR[j]¸üÐ¡¡£
-				* ÀýÈçL=2,3 R=0,2,7
-				* µÚÒ»ÂÖ£º²åÈëR[0]=0, ÊÇL=[2,3] ÓÐ2¸öÄæÐò¶Ô (2,0),(3,0)
-				* µÚ¶þÂÖ£º²åÈëL[0]=2,  ²»×ö´¦Àí ,0¸öÄæÐò¶Ô
-				* µÚÈýÂÖ£º²åÈëR[1]=2,  L=[3],ÓÐ1¸öÄæÐò¶Ô (3,2)
-				* µÚËÄÂÖ£º²åÈëL[1]=3,  ²»×ö´¦Àí, 0¸öÄæÐò¶Ô
-				* µÚÎåÂÖ£º²åÈëR[2]=7,  L=[] 0¸öÄæÐò¶Ô 
-				* ËùÒÔÓÐ3¸öÄæÐò¶Ô 
+				/*å³è¾¹æ¯æ’å…¥ä¸€ä¸ªæ•°å°±æœ‰n1-iä¸ªé€†åºå¯¹å­˜åœ¨,å› ä¸ºæ˜¯å³è¾¹å‰©ä¸‹çš„æ¯ä¸€ä¸ªå…ƒç´ L[i...n1]éƒ½æ¯”R[j]æ›´å°ã€‚
+				* ä¾‹å¦‚L=2,3 R=0,2,7
+				* ç¬¬ä¸€è½®ï¼šæ’å…¥R[0]=0, æ˜¯L=[2,3] æœ‰2ä¸ªé€†åºå¯¹ (2,0),(3,0)
+				* ç¬¬äºŒè½®ï¼šæ’å…¥L[0]=2,  ä¸åšå¤„ç† ,0ä¸ªé€†åºå¯¹
+				* ç¬¬ä¸‰è½®ï¼šæ’å…¥R[1]=2,  L=[3],æœ‰1ä¸ªé€†åºå¯¹ (3,2)
+				* ç¬¬å››è½®ï¼šæ’å…¥L[1]=3,  ä¸åšå¤„ç†, 0ä¸ªé€†åºå¯¹
+				* ç¬¬äº”è½®ï¼šæ’å…¥R[2]=7,  L=[] 0ä¸ªé€†åºå¯¹ 
+				* æ‰€ä»¥æœ‰3ä¸ªé€†åºå¯¹ 
 				*/
 				count+= (n1-i);		
-				//´òÓ¡ÄæÐò¶Ô
+				//æ‰“å°é€†åºå¯¹
 				for(int l = i;l <n1;l++)
 					System.out.print("("+L[l]+","+R[j]+")  ");
 				
@@ -85,13 +85,13 @@ public class InversePair extends Sort
 			}
 		}
 		
-		//½«Ê£ÏÂµÄ²åÈë
+		//å°†å‰©ä¸‹çš„æ’å…¥
 		while(i<n1) s[k++] = L[i++];			
 		while(j<n2) {s[k++] = R[j++];}	
 	}
 	
 	/**
-	 * µÝ¹é½øÐÐmergeÅÅÐò
+	 * é€’å½’è¿›è¡ŒmergeæŽ’åº
 	 * @param s
 	 * @param p
 	 * @param r
@@ -109,12 +109,12 @@ public class InversePair extends Sort
 	
 	public static void main(String[] args)
 	{
-		// ÄæÐò¶ÔÓÐ5¸ö (2,1),(3,1),(8,1),(6,1),(8,6)
+		// é€†åºå¯¹æœ‰5ä¸ª (2,1),(3,1),(8,1),(6,1),(8,6)
 		int [] s = {2,3,8,6,1};
 		
 		InversePair ip = new InversePair();
-		System.out.println("\nÄæÐò¶Ô¸öÊý£º"+ip.countInversePair(s));;
-		System.out.println("ÅÅÐò¹ýºóµÄÊý×é£º");
+		System.out.println("\né€†åºå¯¹ä¸ªæ•°ï¼š"+ip.countInversePair(s));;
+		System.out.println("æŽ’åºè¿‡åŽçš„æ•°ç»„ï¼š");
 		ip.print(s);
 	}
 
