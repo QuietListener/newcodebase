@@ -21,7 +21,7 @@ public class StopThread {
         public void run() {
             while(on && !Thread.currentThread().isInterrupted()){
                 ThreadLocal t =null;
-                t.get()
+                t.get();
                 i++;
             }
 
