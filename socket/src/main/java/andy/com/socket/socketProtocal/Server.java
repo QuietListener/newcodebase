@@ -26,7 +26,7 @@ public class Server {
     private int port = Common.PORT;
     private Charset charset = Charset.forName("GBK");
 
-    List<Frame> frames = new ArrayList<>;
+    List<Frame> frames = new ArrayList<>();
     byte[] buf = null;
 
     public Server() throws IOException {
@@ -142,7 +142,7 @@ public class Server {
 
     private static class FrameBuf {
 
-        private byte[] buf = new byte[];
+        private byte[] buf = new byte[0];
         private BlockingQueue<Frame> frames = new LinkedBlockingDeque<>();
 
         public void addFrame(Frame f) {

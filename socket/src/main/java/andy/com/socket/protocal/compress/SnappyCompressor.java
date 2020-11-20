@@ -1,6 +1,6 @@
 package andy.com.socket.protocal.compress;
 
-import org.xerial.snappy.Snappy;
+//import org.xerial.snappy.Snappy;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public class SnappyCompressor implements Compressor {
      */
     public byte[] compress(byte[] bs) throws IOException {
         long s = System.currentTimeMillis();
-        byte [] r =  Snappy.compress(bs);
+        byte [] r =  null;//Snappy.compress(bs);
         System.out.println(String.format( "snappy_compress: %s bytes ,cost = %s ms",bs.length,System.currentTimeMillis()-s));
         return r;
     }
@@ -30,7 +30,7 @@ public class SnappyCompressor implements Compressor {
      */
     public byte[] uncompress(byte[] bs) throws IOException {
         long s = System.currentTimeMillis();
-        byte [] r = Snappy.uncompress(bs);
+        byte [] r = null;//Snappy.uncompress(bs);
         System.out.println(String.format( "snappy_uncompress: %s bytes ,cost = %s ms",bs.length,System.currentTimeMillis()-s));
         return r;
     }
