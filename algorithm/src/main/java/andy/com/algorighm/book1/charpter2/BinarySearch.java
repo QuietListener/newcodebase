@@ -41,6 +41,7 @@ public class BinarySearch extends Search
 		}
 		System.out.println("\n3 is at the position:"+bs.search(s, 0, s.length-1, 3));
 		System.out.println("9 is at the position:"+bs.search(s, 0, s.length-1, 9));	
-		System.out.println("11 is at the position:"+bs.search(s, 0, s.length-1, 11));	
+		System.out.println("11 is at the position:"+bs.search(s, 0, s.length-1, 11));
+		System.out.println("sssss12");
 	}
 }

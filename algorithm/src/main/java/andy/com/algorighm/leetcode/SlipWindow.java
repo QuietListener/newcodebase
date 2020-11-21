@@ -10,10 +10,11 @@ public class SlipWindow {
     static class Solution {
         public int[] maxSlidingWindow(int[] nums, int k) {
 
+            List<Integer> maxIdx = new ArrayList<>();
             int [] results = new int[nums.length-k+1];
-            int max = -1000000;
-            for(int i = 0; i< nums.length; i++){
 
+            int max = Integer.MAX_VALUE;
+            for(int i = 0; i< nums.length; i++){
 
                 if(nums[i] >= max){
                     max = nums[i];
