@@ -5,6 +5,9 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
+/**
+ * 自己自己实现一个信号量
+ */
 public class MySemaphore {
 
     private volatile Sync sync = null;
@@ -15,6 +18,10 @@ public class MySemaphore {
 
     public void acquire() {
         sync.acquireShared(1);
+    }
+
+    public boolean tryAcquire(TimeUnit unit, long time) throws  InterruptedException{
+        return sync.tryAcquireSharedNanos(1,unit.toNanos(time));
     }
 
     public void release() {
@@ -59,27 +66,35 @@ public class MySemaphore {
         MySemaphore s = new MySemaphore(2);
 
         //Semaphore s = new Semaphore(2);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
 
             final int k = i;
             Thread t = new Thread() {
 
                 @Override
-                public void run() {
+                public void run(){
 
                     try {
-                        s.acquire();
-                        System.out.println(getName() + ":" + new Date().getTime() + ": acquire a permit");
-                        try {
+                        boolean isOk = s.tryAcquire(TimeUnit.SECONDS, k + 2);
+                        if (isOk) {
+                            try {
 
-                            System.out.println(getName() + ":" + new Date().getTime() + ": doing a job");
-                            TimeUnit.SECONDS.sleep(5);
-                            System.out.println(getName() + ":" + new Date().getTime() + ": finished a job");
-                        } finally {
-                            s.release();
+                                System.out.println(getName() + ":" + new Date().getTime() + ": acquire a permit");
+                                try {
+                                    System.out.println(getName() + ":" + new Date().getTime() + ": doing a job");
+                                    TimeUnit.SECONDS.sleep(5);
+                                    System.out.println(getName() + ":" + new Date().getTime() + ": finished a job");
+                                } finally {
+                                    s.release();
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            System.out.println(getName() + ":" + new Date().getTime() + ": do not get a permit");
                         }
-
-                    } catch (Exception e) {
+                    }catch (Exception e){
                         e.printStackTrace();
                     }
                 }
