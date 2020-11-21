@@ -63,21 +63,25 @@ class MyLock {
 
         for (int i = 0; i < 3; i++) {
 
+            final int k = i;
             Thread t = new Thread() {
 
                 @Override
                 public void run() {
 
                     try {
+
                         System.out.println(getName() + ":" + new Date().getTime() + ": wait for job");
                         lock.lock();
+                        lock.lock(); //测试可以重入
                         try {
 
                             System.out.println(getName() + ":" + new Date().getTime() + ": doing a job");
                             TimeUnit.SECONDS.sleep(3);
 
                             System.out.println(getName() + ":" + new Date().getTime() + ": finished a job");
-                        }finally {
+                        } finally {
+                            lock.unlock();
                             lock.unlock();
                         }
 
