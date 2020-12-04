@@ -12,3 +12,4 @@ logs/*
 system.conf
 pid
 jar/*
+*.hprof
