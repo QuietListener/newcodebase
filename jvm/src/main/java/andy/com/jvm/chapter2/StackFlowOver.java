@@ -2,7 +2,7 @@ package andy.com.jvm.chapter2;
 
 /**
  * 虚拟机栈溢出
- * -Xss128k 控制虚拟机栈的大小
+ * -Xss228k 控制虚拟机栈的大小
  */
 public class StackFlowOver {
 

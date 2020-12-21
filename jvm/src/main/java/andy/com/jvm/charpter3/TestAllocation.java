@@ -2,7 +2,7 @@ package andy.com.jvm.charpter3;
 
 /**
  * 测试内存分配
- * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8
+ * VM参数：-XX:+UseConcMarkSweepGC -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8
  *  堆大小为20M 10M分配给新生代，剩下10M是老年代 Eden:survivor1:survivor2=8:1:1
  *
  *  执行testAllocation()中分配allocation4对象的语句时会发生一次MinorGC，
