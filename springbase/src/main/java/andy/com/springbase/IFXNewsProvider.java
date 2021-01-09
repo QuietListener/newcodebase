@@ -1,8 +1,15 @@
 package andy.com.springbase;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class IFXNewsProvider {
 
+    @Autowired
     IFXNewsListener listener;
+
+    @Autowired
     IFXNewsPersister persister;
 
 
