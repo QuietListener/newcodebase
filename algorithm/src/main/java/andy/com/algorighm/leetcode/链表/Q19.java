@@ -7,8 +7,7 @@ import java.util.List;
 public class Q19 {
     public static void main(String [] args){
 
-        int result = new Q387().firstUniqChar("loveleetcode");
-        System.out.println(String.format("%s",result));
+
     }
     public ListNode removeNthFromEnd(ListNode head, int n) {
 
@@ -43,6 +42,6 @@ public class Q19 {
         ListNode next;
         ListNode() {}
         ListNode(int val) { this.val = val; }
-        ListNode(int val, Q2.ListNode next) { this.val = val; this.next = next; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 }
