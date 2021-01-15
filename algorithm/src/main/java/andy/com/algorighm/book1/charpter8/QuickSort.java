@@ -143,7 +143,7 @@ public class QuickSort {
         if (m >= n)
             return;
         // 选择0为pivot
-        int pivot = partition(A, m, n, m);
+        int pivot = partition2(A, m, n, m);
         quickSort(A, m, pivot - 1);
         quickSort(A, pivot + 1, n);
     }
