@@ -18,13 +18,18 @@ public class Q215_heap {
 
 
     public static void adjustDown(int [] nums , int i, int j){
-        int lchild = i*2;
-        int rchild = lchild+1;
 
-        while(i < j){
+
+
+        int cur = i;
+        while(true){
+            int lchild = cur*2+1;
+            int rchild = cur*2+2;
+
             int bigger = -1;
             if(lchild <= j && rchild <= j){
-                if(nums[lchild] > nums[rchild]){
+
+                if(nums[lchild] >= nums[rchild]){
                     bigger = lchild;
                 }else{
                     bigger = rchild;
@@ -37,23 +42,32 @@ public class Q215_heap {
             }
 
             if(bigger > 0) {
-                if(nums[bigger] <= nums[i]){
+                if(nums[bigger] >= nums[cur]){
                     swap(nums, bigger, i);
                 }
             }else{
                 return ;
             }
 
+            cur = bigger;
+
         }
     }
 
 
     public static void heapSort(int [] nums){
-        int i = nums.length/2+1;
+        int i = nums.length/2;
 
-        for(;i >=1; i++){
+        for(;i >=0; i--){
             adjustDown(nums,i,nums.length-1);
         }
+
+        for(int j = 1; j <= 3; j++){
+            swap(nums,0,nums.length-j);
+            adjustDown(nums,0,nums.length-j);
+        }
+
+        System.out.println(nums[3]);
     }
    static  void swap(int [] nums, int i, int j){
         int tmp = nums[i];
