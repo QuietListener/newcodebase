@@ -5,6 +5,10 @@ import java.io.InputStream;
 
 public class TestClassLoader {
 
+    public void test(){
+        System.out.println();
+    }
+
     public static void main(String[] args) throws Exception {
         ClassLoader myloader = new ClassLoader() {
             @Override
