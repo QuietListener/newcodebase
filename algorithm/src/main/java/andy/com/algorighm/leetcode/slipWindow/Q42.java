@@ -41,10 +41,10 @@ public class Q42 {
                 }
             }
 
-            if(find){
+            if(find){ //找到一个比cur更大的就直接加上雨水
                 total+=water;
             }
-            else{
+            else{ //否则没有找到比cur他更大的就 需要用height[maxIdx]来作为水平面
                 if(maxIdx == -1){
                     maxIdx = height.length-1;
                 }

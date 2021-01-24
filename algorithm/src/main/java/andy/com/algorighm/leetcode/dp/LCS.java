@@ -75,7 +75,10 @@ public class LCS {
                     if (c[i][j] > max)
                     {
                         max = c[i][j];
-                        System.out.println(s1.substring(i-max+1,i+1));
+                       String curStr = s1.substring(i-max+1,i+1);
+                       if(curStr.length() > result.length()){
+                           result = curStr;
+                       }
                     }
                 }else {
                     c[i][j] =  0;
@@ -84,6 +87,7 @@ public class LCS {
         }
 
 
+        System.out.println(result);
         return  max;
     }
 
