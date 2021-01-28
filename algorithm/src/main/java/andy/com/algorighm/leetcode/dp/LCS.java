@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 
+/**
+ * 最长公共子串
+ */
 public class LCS {
 
 

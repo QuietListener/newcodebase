@@ -3,7 +3,7 @@ package andy.com.algorighm.leetcode;
 public class Q209 {
 
     public static  void main(String [] args){
-        int a[] = new int[]{2,4,3,1};
+        int a[] = new int[]{2,4};
         int ret = find(a,7);
         System.out.println(ret);
     }
@@ -36,11 +36,19 @@ public class Q209 {
                 if(end<nums.length){
                     sum+=nums[end];
                 }else{
+
+                    if(minLength == Integer.MAX_VALUE){
+                        return 0;
+                    }
+
                     return minLength;
                 }
             }
         }
 
+        if(minLength == Integer.MAX_VALUE){
+            return 0;
+        }
         return minLength;
     }
 }
