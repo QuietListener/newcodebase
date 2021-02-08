@@ -170,6 +170,7 @@ public class QuickSort {
 
 
     public static void main(String[] args) {
+        System.out.println("---!!---");
         int[] A = {4, 2, 8};
         QuickSort qs = new QuickSort();
         print(A, 0, A.length - 1, "original array ");

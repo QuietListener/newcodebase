@@ -17,6 +17,7 @@
         <module>desingpattern</module>
         <module>socket</module>
         <module>springbase</module>
+        <module>algorithm1</module>
     </modules>
 
 
@@ -46,7 +47,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.11</version>
+                <version>3.3.2</version>
             </dependency>
 
         </dependencies>

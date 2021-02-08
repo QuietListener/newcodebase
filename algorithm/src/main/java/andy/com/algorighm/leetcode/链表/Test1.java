@@ -9,6 +9,8 @@ public class Test1 {
         s.put("s","s1");
         s.put("a","a1");
         s.put("d","d1");
+        s.put("d2","d2");
         System.out.println(s.values());
+        System.out.println("aaa");
     }
 }
