@@ -9,7 +9,7 @@ public class Q1_3 {
 
     public static void main(String [] args){
 
-            int [] pies = new int[]{1,3,4,7,9,2};
+            int [] pies = new int[]{1,2,3,4,7,9};
             int count = 0;
             for(int i = pies.length - 1; i>=0 ;i--){
                 int maxIdx = maxIdx(pies,0,i);
