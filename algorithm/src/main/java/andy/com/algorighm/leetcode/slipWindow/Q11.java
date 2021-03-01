@@ -5,6 +5,11 @@ public class Q11 {
 
     }
 
+    /**
+     * https://leetcode-cn.com/problems/container-with-most-water/solution/container-with-most-water-shuang-zhi-zhen-fa-yi-do/
+     * @param height
+     * @return
+     */
     public int maxArea1(int[] height) {
         int i = 0;
         int j = height.length-1;
