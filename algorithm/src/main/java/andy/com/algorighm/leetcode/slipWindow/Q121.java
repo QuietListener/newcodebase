@@ -40,4 +40,28 @@ public class Q121 {
         return max;
     }
 
+    /**
+     * 更好的办法
+     * @param prices
+     * @return
+     */
+    public int maxProfit1(int[] prices) {
+        int ret = 0;
+        int minIndex = 0;
+        for(int i = 0; i < prices.length  ; i++){
+            if(prices[i] < prices[minIndex]){
+                minIndex = i;
+            }
+
+            if(minIndex != i){
+                int tmp = prices[i] - prices[minIndex];
+                if(tmp > ret){
+                    ret = tmp;
+                }
+            }
+        }
+
+        return ret;
+    }
+
 }
