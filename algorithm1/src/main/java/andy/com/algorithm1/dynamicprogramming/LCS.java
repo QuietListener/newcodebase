@@ -52,8 +52,8 @@ public class LCS {
                     lcsMatrix[i][j] = lcsMatrix[i-1][j-1]+1;
                     //System.out.println(l1[i-1]);
                     if(lcsMatrix[i][j]>lcsMatrix[maxI][maxJ]){
-                        maxI = i;
-                        maxJ = j;
+                        maxI = i-1;
+                        maxJ = j-1;
                     }
                 }
                 else{
@@ -74,5 +74,12 @@ public class LCS {
         lcs(a.toCharArray(),b.toCharArray());
         System.out.println("------------------------");
         lcs1(a.toCharArray(),b.toCharArray());
+
+        String s1 = "babad";
+        String s2 = new StringBuffer(s1).reverse().toString();
+
+        System.out.println(s1);
+        System.out.println(s2);
+        lcs1(s1.toCharArray(),s2.toCharArray());
     }
 }
