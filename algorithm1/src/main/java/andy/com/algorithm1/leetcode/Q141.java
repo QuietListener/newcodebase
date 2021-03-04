@@ -3,14 +3,6 @@ package andy.com.algorithm1.leetcode;
 
 import org.junit.Test;
 
- class ListNode {
-     int val;
-    ListNode next;
-     ListNode(int x) {
-         val = x;
-        next = null;
-     }
- }
 
 
 public class Q141 {
@@ -37,5 +29,15 @@ public class Q141 {
         }
 
         return false;
+    }
+}
+
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) {
+        val = x;
+        next = null;
     }
 }

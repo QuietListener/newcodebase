@@ -13,7 +13,7 @@ public class Test {
         map.put(-1,"d");
 
         int ceiling = map.ceilingKey(0);
-        int floor = map.floorKey(0);
+        int floor = map.floorKey(-1);
 
         System.out.println("c = "+ceiling +"  f = " +floor);
 

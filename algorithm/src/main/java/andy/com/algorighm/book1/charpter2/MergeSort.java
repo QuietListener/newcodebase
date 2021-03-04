@@ -84,8 +84,8 @@ public class MergeSort extends Sort
 	public static void main(String[] args)
 	{
 		int [] s = {2,5,3,1,1,3,4,4,9,0};
-		int [] ret = new InsertSort().sort(s,Sort.INCREMENT);		
-		new InsertSort().print(s);
+		int [] ret = new MergeSort().sort(s,Sort.INCREMENT);
+		new MergeSort().print(s);
 
 	}
 
