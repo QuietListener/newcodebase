@@ -1,5 +1,9 @@
 package andy.com.algorithm1.beautify_program.part1;
 
+import sun.reflect.generics.tree.Tree;
+
+import java.util.Iterator;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -18,6 +22,18 @@ public class Test {
         System.out.println("c = "+ceiling +"  f = " +floor);
 
         System.out.println(map.keySet().stream().map(t->t.toString()).collect(Collectors.joining(",")));
+
+        Iterator<Map.Entry<Integer,String>> i = map.entrySet().iterator();
+
+        int count = 0;
+        while(i.hasNext()){
+            Map.Entry<Integer,String> cur = (Map.Entry<Integer,String>)i.next();
+
+            System.out.println(count+":"+cur.getKey());
+            if(count == 0){
+                map.put(111,"111");
+            }
+        }
     }
 
 //    public List<Integer []> find(int [] nums){
