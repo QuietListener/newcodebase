@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
  */
 public class Q46 {
 
-
     public static void main(String [] args){
         int [] nums = new int [] {2,3,1};
         List<List<Integer>> ret =  new Q46().permute(nums);
