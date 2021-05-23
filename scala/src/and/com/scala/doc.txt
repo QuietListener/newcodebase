@@ -1,1 +1,2 @@
-但李对象:
+单例对象:and/com/scala/singleInstance/Marker.scala
+伴生对象：
