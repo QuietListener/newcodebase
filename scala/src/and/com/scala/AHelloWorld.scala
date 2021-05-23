@@ -50,8 +50,15 @@ object AHelloWorld {
 
 
     /**
-     * ==
+     * == 是equal的意思
      */
+
+    val a1 = "hello"
+    val b1 = "hello"
+    val c1 = new String("hello");
+
+    println(a1 == b1)
+    println(a1 == c1)
   }
 
 
