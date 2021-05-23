@@ -13,3 +13,4 @@ system.conf
 pid
 jar/*
 *.hprof
+/out/

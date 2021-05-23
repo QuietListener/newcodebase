@@ -46,7 +46,7 @@ public class Q64 {
                    continue;
                 }
                 int tmpsum = sum+grid[i][tmpj];
-                path.add(new int[]{i,tmpj});
+                path.push(new int[]{i,tmpj});
                 minPathSum_(grid,i,tmpj, tmpsum,path);
                 path.pop();
             }else if(k == 1){//向下
@@ -56,7 +56,7 @@ public class Q64 {
                 }
 
                 int tmpsum = sum+ grid[tmpi][j];
-                path.add(new int[]{tmpi,j});
+                path.push(new int[]{tmpi,j});
                 minPathSum_(grid,tmpi,j, tmpsum,path);
                 path.pop();
             }
@@ -79,5 +79,10 @@ public class Q64 {
 
         System.out.println("-------------");
         System.out.println(ret);
+    }
+
+    @Test
+    public void test1(){
+
     }
 }

@@ -41,9 +41,46 @@ public class Q5 {
         System.out.println("result:"+result);
     }
 
+
+    public static void find1(String s){
+        boolean [][]dp = new boolean[s.length()][s.length()];
+
+        for(int i = 0; i < dp.length; i++){
+            dp[i][i] = true;
+        }
+
+        for(int length = 2; length <= s.length(); length++){
+            for(int start = 0; start < s.length();start++){
+                int end = start+length-1;
+
+                if(end > s.length()-1  ){
+                    continue;
+                }
+
+                if( s.charAt(start) == s.charAt(end) ){
+                    if(start+1<=end-1){
+                        dp[start][end] = dp[start+1][end-1];
+                    }else{
+                        dp[start][end] = true;
+                    }
+
+
+                    if(dp[start][end] == true){
+                        System.out.println(s.substring(start,end+1));
+                    }
+                }
+                else{
+                    dp[start][end] = false;
+                }
+            }
+        }
+    }
+
     @Test
     public void test(){
-        String s = "11aba32";
+        String s = "abba";
         find(s);
+        System.out.println("---------------------");
+        find1(s);
     }
 }

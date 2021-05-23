@@ -17,6 +17,12 @@ public class Q450 {
      * 递归删除
      */
     public void deleteNode_(TreeNode node,TreeNode parent){
+
+
+        if(node == null){
+            return;
+        }
+
         if(node.left == null && node.right == null){
             if(parent.right == node){
                 parent.right = null;
